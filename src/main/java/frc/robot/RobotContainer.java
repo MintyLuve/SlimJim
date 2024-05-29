@@ -6,19 +6,26 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Commands.Toggle;
 import frc.robot.Commands.XboxMove;
 import frc.robot.Subsystems.Motor;
+import frc.robot.Subsystems.Solly;
 
 public class RobotContainer {
   Motor motor = new Motor();
+  Solly solenoid = new Solly();
   XboxMove xboxMove = new XboxMove(motor);
+  private CommandXboxController operator = Controls.operator;
 
   public RobotContainer() {
     motor.setDefaultCommand(xboxMove);
     configureBindings();
   }
 
-  private void configureBindings() {}
+  private void configureBindings() {
+    operator.x().onTrue(new Toggle(solenoid));
+  }
 
   public Command getAutonomousCommand() {
     return Commands.print("No autonomous command configured");

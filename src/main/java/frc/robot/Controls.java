@@ -8,6 +8,6 @@ public class Controls {
   /* The driver's controller */
   public static XboxController xbox_driver = new XboxController(Constants.ControllerConstants.DRIVER_PORT);
   public static XboxController xbox_operator = new XboxController(Constants.ControllerConstants.OPERATOR_PORT);
-  public static CommandXboxController driver = new CommandXboxController(0); // Creates a CommandXboxController on port 1.
-  public static CommandXboxController operator = new CommandXboxController(1); // Creates a CommandXboxController on port 1.
+  public static CommandXboxController driver = new CommandXboxController(Constants.ControllerConstants.DRIVER_PORT); // Creates a CommandXboxController on port 1.
+  public static CommandXboxController operator = new CommandXboxController(Constants.ControllerConstants.OPERATOR_PORT); // Creates a CommandXboxController on port 1.
 }

@@ -7,8 +7,11 @@ public class Constants {
         public static final double SENSITIVITY = 0.05;
     }
 
-    public static class MotorConstants{
+    public static class ObjectConstants{
         public static final int MOTOR_PORT = 3;
+        public static final int SOLENOID_CAN_PORT = 1;
+        public static final int SOLENOID_PORT_FORWARD = 0;
+        public static final int SOLENOID_PORT_REVERSE = 1;
     }
     
 }

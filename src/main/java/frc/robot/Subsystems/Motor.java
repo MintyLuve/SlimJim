@@ -15,7 +15,7 @@ public class Motor extends SubsystemBase {
 
   CANSparkMax motor;
   public Motor() {
-    motor = new CANSparkMax(Constants.MotorConstants.MOTOR_PORT, MotorType.kBrushless);
+    motor = new CANSparkMax(Constants.ObjectConstants.MOTOR_PORT, MotorType.kBrushless);
 
   }
 
