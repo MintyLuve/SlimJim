@@ -4,17 +4,20 @@
 
 package frc.robot.Commands;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Subsystems.Solly;
+import frc.robot.Subsystems.Limiter;
+import frc.robot.Subsystems.Motor;
 
-public class Toggle extends Command {
-  /** Creates a new Toggle. */
-  Solly solenoid;
-  public Toggle(Solly m_solenoid) {
-    solenoid = m_solenoid;
+public class LimitMotor extends Command {
+  /** Creates a new LimitStop. */
+  Limiter limiter;
+  Motor motor;
+
+  public LimitMotor(Limiter m_limiter, Motor m_motor) {
+    limiter = m_limiter;
+    motor = m_motor;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(solenoid);
+    addRequirements(m_limiter, m_motor);
   }
 
   // Called when the command is initially scheduled.
@@ -24,13 +27,10 @@ public class Toggle extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (solenoid.getState().equals(Value.kForward)){
-      solenoid.retract();
+    boolean state = limiter.getState();
+    if (state){
+      motor.stop();
     }
-    else if (solenoid.getState().equals(Value.kReverse)){
-      solenoid.extend();
-    }
-    
   }
 
   // Called once the command ends or is interrupted.
@@ -40,6 +40,6 @@ public class Toggle extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

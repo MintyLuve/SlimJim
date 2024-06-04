@@ -12,6 +12,7 @@ public class Constants {
         public static final int SOLENOID_CAN_PORT = 1;
         public static final int SOLENOID_PORT_FORWARD = 0;
         public static final int SOLENOID_PORT_REVERSE = 1;
+        public static final int DIGITAL_INPUT_PORT = 0;
     }
     
 }
