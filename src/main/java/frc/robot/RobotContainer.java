@@ -7,19 +7,15 @@ package frc.robot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.Commands.LimitMotor;
 import frc.robot.Commands.Toggle;
 import frc.robot.Commands.XboxMove;
-import frc.robot.Subsystems.Limiter;
 import frc.robot.Subsystems.Motor;
 import frc.robot.Subsystems.Solly;
 
 public class RobotContainer {
   Motor motor = new Motor();
   Solly solenoid = new Solly();
-  Limiter limiter = new Limiter();
   XboxMove xboxMove = new XboxMove(motor);
-  LimitMotor limitMotor = new LimitMotor(limiter, motor);
   private CommandXboxController operator = Controls.operator;
 
   public RobotContainer() {

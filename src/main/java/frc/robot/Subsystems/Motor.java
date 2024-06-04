@@ -7,15 +7,19 @@ package frc.robot.Subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.ObjectConstants;
 
 public class Motor extends SubsystemBase {
   /** Creates a new Motor. */
 
   CANSparkMax motor;
+  DigitalInput dInput;
   public Motor() {
     motor = new CANSparkMax(Constants.ObjectConstants.MOTOR_PORT, MotorType.kBrushless);
+    dInput = new DigitalInput(ObjectConstants.DIGITAL_INPUT_PORT);
 
   }
 
@@ -29,5 +33,8 @@ public class Motor extends SubsystemBase {
   }
   public void move(double speed){
     motor.set(speed);
+  }
+  public boolean getLimiterState(){
+    return dInput.get();
   }
 }
