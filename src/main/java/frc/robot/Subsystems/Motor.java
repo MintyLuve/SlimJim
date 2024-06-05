@@ -40,7 +40,7 @@ public class Motor extends SubsystemBase {
     motor.set(speed);
   }
   public void setToPID(){
-    pController.setReference(0.5, ControlType.kPosition);
+    pController.setReference(encoder.getDistance(), ControlType.kPosition);
     //pController.setOutputRange(0, 0.8);
     //motor.set(pController.getOutputMax());
   }
