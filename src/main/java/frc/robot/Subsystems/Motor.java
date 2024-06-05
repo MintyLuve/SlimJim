@@ -9,20 +9,22 @@ import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import com.ctre.phoenix6.hardware.TalonFX;
+
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.ObjectConstants;
 import frc.robot.Constants.PIDConstants;
 
 public class Motor extends SubsystemBase {
   /** Creates a new Motor. */
 
   SparkPIDController pController;
-  CANSparkMax motor;
+  TalonFX motor;
   public Encoder encoder;
   public Motor() {
-    motor = new CANSparkMax(Constants.ObjectConstants.MOTOR_PORT, MotorType.kBrushless);
+    motor = new TalonFX(ObjectConstants.MOTOR_PORT, "rio");
     pController = motor.getPIDController();
     encoder = new Encoder(PIDConstants.ENCODER_SOURCE_A, PIDConstants.ENCODER_SOURCE_B);
 
