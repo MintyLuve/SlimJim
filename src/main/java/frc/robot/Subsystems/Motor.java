@@ -4,39 +4,37 @@
 
 package frc.robot.Subsystems;
 
-import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.Constants.ObjectConstants;
 
 public class Motor extends SubsystemBase {
   /** Creates a new Motor. */
 
-  CANSparkMax canMotor;
-  TalonFX talonMotor;
+  CANSparkMax motor_1;
+  CANSparkMax motor_2;
 
   public Motor() {
-    canMotor = new CANSparkMax(Constants.ObjectConstants.CAN_MOTOR_PORT, MotorType.kBrushless);
-    talonMotor = new TalonFX(ObjectConstants.TALON_MOTOR_PORT, "rio");
+    motor_1 = new CANSparkMax(ObjectConstants.MOTOR_PORT_1, MotorType.kBrushless);
+    motor_2 = new CANSparkMax(ObjectConstants.MOTOR_PORT_2, MotorType.kBrushless);
 
-    talonMotor.setInverted(true);
+    motor_1.setInverted(false);
 
   }
-
+ 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
 
   public void stop(){
-    canMotor.set(0);
-    talonMotor.set(0);
+    motor_1.set(0);
+    motor_2.set(0);
   }
   public void move(double speed){
-    canMotor.set(speed);
-    talonMotor.set(speed);
+    motor_1.set(speed);
+    motor_2.set(speed);
   }
 }
