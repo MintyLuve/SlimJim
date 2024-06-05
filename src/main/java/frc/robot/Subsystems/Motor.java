@@ -5,6 +5,7 @@
 package frc.robot.Subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkLowLevel.MotorType;
@@ -20,11 +21,11 @@ public class Motor extends SubsystemBase {
 
   SparkPIDController pController;
   CANSparkMax motor;
-  public Encoder encoder;
+  public RelativeEncoder encoder;
   public Motor() {
     motor = new CANSparkMax(Constants.ObjectConstants.MOTOR_PORT, MotorType.kBrushless);
     pController = motor.getPIDController();
-    encoder = new Encoder(PIDConstants.ENCODER_SOURCE_A, PIDConstants.ENCODER_SOURCE_B);
+    encoder = motor.getEncoder();
 
   }
 
@@ -40,7 +41,7 @@ public class Motor extends SubsystemBase {
     motor.set(speed);
   }
   public void setToPID(){
-    pController.setReference(encoder.getDistance(), ControlType.kPosition);
+    pController.setReference(encoder.getPosition(), CANSparkMax.ControlType.kPosition);
     //pController.setOutputRange(0, 0.8);
     //motor.set(pController.getOutputMax());
   }

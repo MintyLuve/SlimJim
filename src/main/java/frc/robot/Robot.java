@@ -22,7 +22,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
-    SmartDashboard.putNumber("Encoder Value", m_robotContainer.motor.encoder.getDistance());
+    SmartDashboard.putNumber("Encoder Value", m_robotContainer.motor.encoder.getPosition());
   }
 
   @Override
