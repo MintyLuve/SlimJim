@@ -4,11 +4,8 @@
 
 package frc.robot.Commands;
 
-import java.util.ResourceBundle.Control;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Controls;
 import frc.robot.Subsystems.Solly;
 
 public class Toggle extends Command {

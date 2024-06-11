@@ -29,15 +29,21 @@ public class XboxMove extends Command {
     double throttle = Controls.xbox_operator.getRightTriggerAxis();
     double reverse = Controls.xbox_operator.getLeftTriggerAxis();
     
-    if (reverse > sens && throttle <= sens){
-      motor.move(-reverse);
-    }
-    else if (throttle > sens && reverse <= sens){
-      motor.move(throttle);
+    if(motor.getLimiterState() == false){
+      if (reverse > sens && throttle <= sens){
+        motor.move(-reverse);
+      }
+      else if (throttle > sens && reverse <= sens){
+        motor.move(throttle);
+      }
+      else{
+        motor.stop();
+      }
     }
     else{
       motor.stop();
     }
+    
   }
 
   // Called once the command ends or is interrupted.
