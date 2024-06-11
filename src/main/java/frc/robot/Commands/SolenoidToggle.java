@@ -4,17 +4,15 @@
 
 package frc.robot.Commands;
 
-import java.util.ResourceBundle.Control;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Controls;
 import frc.robot.Subsystems.Solly;
 
-public class Toggle extends Command {
+public class SolenoidToggle extends Command {
   /** Creates a new Toggle. */
   Solly solenoid;
-  public Toggle(Solly m_solenoid) {
+  public SolenoidToggle(Solly m_solenoid) {
     solenoid = m_solenoid;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(solenoid);
@@ -32,6 +30,9 @@ public class Toggle extends Command {
     }
     else if (solenoid.getState().equals(Value.kReverse)){
       solenoid.extend();
+    }
+    else {
+      solenoid.retract();
     }
     
   }

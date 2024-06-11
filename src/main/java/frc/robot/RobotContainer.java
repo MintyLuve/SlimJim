@@ -7,7 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.Commands.Toggle;
+import frc.robot.Commands.SolenoidToggle;
 import frc.robot.Commands.XboxMove;
 import frc.robot.Subsystems.Motor;
 import frc.robot.Subsystems.Solly;
@@ -24,7 +24,7 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    operator.x().onTrue(new Toggle(solenoid));
+    operator.x().onTrue(new SolenoidToggle(solenoid));
   }
 
   public Command getAutonomousCommand() {
