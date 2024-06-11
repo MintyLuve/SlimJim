@@ -7,9 +7,11 @@ package frc.robot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Commands.FollowEncoder;
 import frc.robot.Commands.MotorPID;
 import frc.robot.Commands.Toggle;
 import frc.robot.Commands.XboxMove;
+import frc.robot.Constants.DumbConstants;
 import frc.robot.Subsystems.Motor;
 import frc.robot.Subsystems.Solly;
 
@@ -26,7 +28,9 @@ public class RobotContainer {
 
   private void configureBindings() {
     operator.x().onTrue(new Toggle(solenoid));
-    operator.y().toggleOnTrue(new MotorPID(motor));
+    operator.y().whileTrue(new MotorPID(motor, DumbConstants.FULL_POSITION_FORWARD));
+    operator.b().whileTrue(new MotorPID(motor, DumbConstants.HALF_POSITION_REVERSE));
+    operator.a().toggleOnTrue(new FollowEncoder(motor));
   }
 
   public Command getAutonomousCommand() {
