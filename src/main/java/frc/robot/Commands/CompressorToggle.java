@@ -4,17 +4,16 @@
 
 package frc.robot.Commands;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Subsystems.Solly;
+import frc.robot.Subsystems.Compressy;
 
-public class SolenoidToggle extends Command {
-  /** Creates a new Toggle. */
-  Solly solenoid;
-  public SolenoidToggle(Solly m_solenoid) {
-    solenoid = m_solenoid;
+public class CompressorToggle extends Command {
+  /** Creates a new CompressorToggle. */
+  Compressy compressor;
+  public CompressorToggle(Compressy m_compressor) {
+    compressor = m_compressor;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(solenoid);
+    addRequirements(compressor);
   }
 
   // Called when the command is initially scheduled.
@@ -24,14 +23,14 @@ public class SolenoidToggle extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (solenoid.getState().equals(Value.kForward)){
-      solenoid.retract();
+    if (compressor.isOn()){
+      compressor.disable();
     }
-    else if (solenoid.getState().equals(Value.kReverse)){
-      solenoid.extend();
+    else if (!compressor.isOn()){
+      compressor.enable();
     }
     else {
-      solenoid.retract();
+      compressor.disable();
     }
     
   }
