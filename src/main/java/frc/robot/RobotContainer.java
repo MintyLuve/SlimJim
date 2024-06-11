@@ -23,6 +23,7 @@ public class RobotContainer {
 
   public RobotContainer() {
     motor.setDefaultCommand(xboxMove);
+    //limiter.setDefaultCommand(limitMotor);
     configureBindings();
   }
 

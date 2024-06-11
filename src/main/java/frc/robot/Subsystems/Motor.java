@@ -16,6 +16,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.DumbConstants;
 import frc.robot.Constants.PIDConstants;
+import edu.wpi.first.wpilibj.DigitalInput;
+import frc.robot.Constants.ObjectConstants;
 
 public class Motor extends SubsystemBase {
   /** Creates a new Motor. */
@@ -25,6 +27,7 @@ public class Motor extends SubsystemBase {
   CANSparkMax motor;
   public RelativeEncoder sparkEncoder;
   public Encoder encoder;
+  DigitalInput dInput;
 
   public Motor() {
     //init variables
@@ -32,6 +35,7 @@ public class Motor extends SubsystemBase {
     pController = motor.getPIDController();
     sparkEncoder = motor.getEncoder();
     encoder = new Encoder(PIDConstants.ENCODER_SOURCE_A, PIDConstants.ENCODER_SOURCE_B, false, Encoder.EncodingType.k2X);
+    dInput = new DigitalInput(ObjectConstants.DIGITAL_INPUT_PORT);
 
     // sets pid constants
     pController.setP(PIDConstants.PID_P);
@@ -42,7 +46,6 @@ public class Motor extends SubsystemBase {
     pController.setPositionPIDWrappingEnabled(true);
     pController.setPositionPIDWrappingMaxInput(DumbConstants.FULL_POSITION_FORWARD);
     pController.setPositionPIDWrappingMinInput(DumbConstants.FULL_POSITION_REVERSE);
-
   }
 
   @Override
@@ -65,5 +68,9 @@ public class Motor extends SubsystemBase {
   //gets the red encoder's rotation
   public double getQRotation(){
     return -1 * encoder.getDistance()/ PIDConstants.ENCODER_FULL_ROTAION_PULSES;
+  }
+  // gets the limit switch state
+    public boolean getLimiterState(){
+    return dInput.get();
   }
 }
