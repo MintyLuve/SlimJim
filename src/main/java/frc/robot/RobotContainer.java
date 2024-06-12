@@ -35,7 +35,7 @@ public class RobotContainer {
     operator.b().whileTrue(new MotorPID(motor, DumbConstants.HALF_POSITION_REVERSE));
     operator.a().toggleOnTrue(new FollowEncoder(motor));
     operator.povLeft().onTrue(new SolenoidToggle(solenoid));
-    operator.povRight().onTrue(new CompressorToggle(compressor));
+    operator.povUp().onTrue(new CompressorToggle(compressor));
   }
 
   public Command getAutonomousCommand() {
