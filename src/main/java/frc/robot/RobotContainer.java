@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.AddressableLED;
+import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -11,9 +13,13 @@ import frc.robot.Commands.FollowEncoder;
 import frc.robot.Commands.MotorPID;
 import frc.robot.Commands.XboxMove;
 import frc.robot.Constants.DumbConstants;
+import frc.robot.Constants.LEDConstants;
+import frc.robot.Commands.LEDSolidColor;
+import frc.robot.Commands.LEDRainbow;
 import frc.robot.Commands.CompressorToggle;
 import frc.robot.Commands.SolenoidToggle;
 import frc.robot.Subsystems.Compressy;
+import frc.robot.Subsystems.LEDSubsystem;
 import frc.robot.Subsystems.Motor;
 import frc.robot.Subsystems.Solly;
 
@@ -22,11 +28,20 @@ public class RobotContainer {
   Solly solenoid = new Solly();
   Compressy compressor = new Compressy();
   XboxMove xboxMove = new XboxMove(motor);
+  
+  AddressableLED ledStrip = new AddressableLED(LEDConstants.LED_PORT);
+  AddressableLEDBuffer stripBuffer = new AddressableLEDBuffer(LEDConstants.LED_COUNT);
+  LEDSubsystem ledSubsystem = new LEDSubsystem(ledStrip, stripBuffer);
+  
   private CommandXboxController operator = Controls.operator;
 
   public RobotContainer() {
     motor.setDefaultCommand(xboxMove);
-    //limiter.setDefaultCommand(limitMotor);
+    ledStrip.setLength(LEDConstants.LED_COUNT);
+    Commands.waitSeconds(10);
+    ledStrip.setData(stripBuffer);
+    ledStrip.start();
+    
     configureBindings();
   }
 
@@ -36,6 +51,8 @@ public class RobotContainer {
     operator.a().toggleOnTrue(new FollowEncoder(motor));
     operator.povLeft().onTrue(new SolenoidToggle(solenoid));
     operator.povUp().onTrue(new CompressorToggle(compressor));
+    operator.povRight().onTrue(new LEDSolidColor(ledSubsystem, "GREEN"));
+    operator.povDown().toggleOnTrue(new LEDRainbow(ledSubsystem));
   }
 
   public Command getAutonomousCommand() {
