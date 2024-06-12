@@ -25,6 +25,11 @@ public class Constants {
 
     }
 
+    public static class LEDConstants {
+        public static final int LED_COUNT = 20;
+        public static final int LED_PORT = 1;
+    }
+
     public static class DumbConstants {
         public static final double FULL_POSITION_FORWARD = 1;
         public static final double FULL_POSITION_REVERSE = -1;
