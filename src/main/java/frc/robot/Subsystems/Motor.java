@@ -4,8 +4,7 @@
 
 package frc.robot.Subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ObjectConstants;
@@ -13,14 +12,15 @@ import frc.robot.Constants.ObjectConstants;
 public class Motor extends SubsystemBase {
   /** Creates a new Motor. */
 
-  CANSparkMax motor_1;
-  CANSparkMax motor_2;
+  TalonFX motor_1;
+  TalonFX motor_2;
 
   public Motor() {
-    motor_1 = new CANSparkMax(ObjectConstants.MOTOR_PORT_1, MotorType.kBrushless);
-    motor_2 = new CANSparkMax(ObjectConstants.MOTOR_PORT_2, MotorType.kBrushless);
+    motor_1 = new TalonFX(ObjectConstants.MOTOR_PORT_1, "rio");
+    motor_2 = new TalonFX(ObjectConstants.MOTOR_PORT_2, "rio");
 
     motor_1.setInverted(false);
+    motor_2.setInverted(true);
 
   }
  
