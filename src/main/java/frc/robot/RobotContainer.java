@@ -6,12 +6,16 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Commands.SetVelocity;
 import frc.robot.Commands.XboxMove;
+import frc.robot.Constants.PIDConstants;
 import frc.robot.Subsystems.Motor;
 
 public class RobotContainer {
   Motor motor = new Motor();
   XboxMove xboxMove = new XboxMove(motor);
+  CommandXboxController operator = Controls.operator;
 
   public RobotContainer() {
     motor.setDefaultCommand(xboxMove);
@@ -19,6 +23,9 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
+    operator.a().whileTrue(new SetVelocity(motor, PIDConstants.VELOCITY_LOW));
+    operator.b().whileTrue(new SetVelocity(motor, PIDConstants.VELOCITY_HIGH));
+
   }
 
   public Command getAutonomousCommand() {
