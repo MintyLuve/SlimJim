@@ -8,7 +8,7 @@ public class Constants {
     }
 
     public static class ObjectConstants{
-        public static final int MOTOR_PORT_1 = 6; //7
+        public static final int MOTOR_PORT_1 = 7;
         public static final int MOTOR_PORT_2 = 8;
     }
 

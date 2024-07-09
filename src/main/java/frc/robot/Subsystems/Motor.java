@@ -7,6 +7,7 @@ package frc.robot.Subsystems;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -17,7 +18,7 @@ public class Motor extends SubsystemBase {
   /** Creates a new Motor. */
 
   TalonFX motor_1;
-  //TalonFX motor_2;
+  TalonFX motor_2;
 
   Slot0Configs slot0Configs;
 
@@ -29,10 +30,13 @@ public class Motor extends SubsystemBase {
 
   public Motor() {
     motor_1 = new TalonFX(ObjectConstants.MOTOR_PORT_1, "rio");
-    //motor_2 = new TalonFX(ObjectConstants.MOTOR_PORT_2, "rio");
+    motor_2 = new TalonFX(ObjectConstants.MOTOR_PORT_2, "rio");
     
+    motor_1.setNeutralMode(NeutralModeValue.Coast);
+    motor_1.setNeutralMode(NeutralModeValue.Coast);
+
     motor_1.setInverted(true);
-    //motor_2.setInverted(false);
+    motor_2.setInverted(false);
 
     /* 54 */
     kS = 0.105401;
@@ -51,7 +55,7 @@ public class Motor extends SubsystemBase {
     slot0Configs.kD = kD;
 
     motor_1.getConfigurator().apply(slot0Configs);
-    //motor_2.getConfigurator().apply(slot0Configs);
+    motor_2.getConfigurator().apply(slot0Configs);
 
     /* Tuning from smart dashboard!! */
     SmartDashboard.putNumber("S Gain", kS);
@@ -65,8 +69,10 @@ public class Motor extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    String vStr = motor_1.getVelocity().toString();
-    SmartDashboard.putString("Velocity", vStr);
+    String vel1 = motor_1.getVelocity().toString();
+    SmartDashboard.putString("Velocity Motor 1", vel1);
+    String vel2 = motor_2.getVelocity().toString();
+    SmartDashboard.putString("Velocity Motor 2", vel2);
 
     /* Tuning from smart dashboard!! */
     double s = SmartDashboard.getNumber("S Gain", 0);
@@ -82,18 +88,18 @@ public class Motor extends SubsystemBase {
     if((d != kD)) { slot0Configs.kD = d; }
 
     motor_1.getConfigurator().apply(slot0Configs);
+    motor_2.getConfigurator().apply(slot0Configs);
 
   }
 
   public void stop(){
     motor_1.set(0);
-    //motor_2.set(0);
+    motor_2.set(0);
   }
 
   public void move(double speed){
     motor_1.set(speed);
-  
-    //motor_2.set(speed);
+    motor_2.set(speed);
   }
   
   public void setVelocity(double velocity){
@@ -102,5 +108,6 @@ public class Motor extends SubsystemBase {
 
     // set velocity to varibale velocity rps, add 0.5 V to overcome gravity
     motor_1.setControl(m_request.withVelocity(velocity).withFeedForward(0.5));
+    motor_2.setControl(m_request.withVelocity(velocity).withFeedForward(0.5));
   }
 }
