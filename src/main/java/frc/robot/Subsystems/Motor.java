@@ -19,6 +19,14 @@ public class Motor extends SubsystemBase {
   TalonFX motor_1;
   //TalonFX motor_2;
 
+  Slot0Configs slot0Configs;
+
+  double kS;
+  double kP;
+  double kV;
+  double kD;
+  double kI;
+
   public Motor() {
     motor_1 = new TalonFX(ObjectConstants.MOTOR_PORT_1, "rio");
     //motor_2 = new TalonFX(ObjectConstants.MOTOR_PORT_2, "rio");
@@ -26,23 +34,52 @@ public class Motor extends SubsystemBase {
     motor_1.setInverted(true);
     //motor_2.setInverted(false);
 
-    var slot0Configs = new Slot0Configs();
-    slot0Configs.kS = PIDConstants.kS;
-    slot0Configs.kV = PIDConstants.kV;
-    slot0Configs.kP = PIDConstants.kP;
-    slot0Configs.kI = PIDConstants.kI;
-    slot0Configs.kD = PIDConstants.kD;
+    kS = 0.07;
+    kV = 0;
+    kP = 0.095;
+    kI = 0.002;
+    kD = 0.002;
+
+    slot0Configs = new Slot0Configs();
+    slot0Configs.kS = kS;
+    slot0Configs.kV = kV;
+    slot0Configs.kP = kP;
+    slot0Configs.kI = kI;
+    slot0Configs.kD = kD;
 
     motor_1.getConfigurator().apply(slot0Configs);
     //motor_2.getConfigurator().apply(slot0Configs);
+
+    /* Tuning from smart dashboard!! */
+    SmartDashboard.putNumber("S Gain", kS);
+    SmartDashboard.putNumber("V Gain", kV);
+    SmartDashboard.putNumber("P Gain", kP);
+    SmartDashboard.putNumber("I Gain", kI);
+    SmartDashboard.putNumber("D Gain", kD);
 
   }
  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    String v = motor_1.getVelocity().toString();
-    SmartDashboard.putString("Velocity", v);
+    String vStr = motor_1.getVelocity().toString();
+    SmartDashboard.putString("Velocity", vStr);
+
+    /* Tuning from smart dashboard!! */
+    double s = SmartDashboard.getNumber("S Gain", 0);
+    double v = SmartDashboard.getNumber("V Gain", 0);
+    double p = SmartDashboard.getNumber("P Gain", 0);
+    double i = SmartDashboard.getNumber("I Gain", 0);
+    double d = SmartDashboard.getNumber("D Gain", 0);
+    
+    if((s != kS)) { slot0Configs.kS = s; }
+    if((v != kV)) { slot0Configs.kV = v; }
+    if((p != kP)) { slot0Configs.kP = p; }
+    if((i != kI)) { slot0Configs.kI = i; }
+    if((d != kD)) { slot0Configs.kD = d; }
+
+    motor_1.getConfigurator().apply(slot0Configs);
+
   }
 
   public void stop(){
@@ -52,6 +89,7 @@ public class Motor extends SubsystemBase {
 
   public void move(double speed){
     motor_1.set(speed);
+  
     //motor_2.set(speed);
   }
   
