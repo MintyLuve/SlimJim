@@ -34,11 +34,14 @@ public class Motor extends SubsystemBase {
     motor_1.setInverted(true);
     //motor_2.setInverted(false);
 
-    kS = 0.07;
-    kV = 0;
-    kP = 0.095;
-    kI = 0.002;
-    kD = 0.002;
+    /* 54 */
+    kS = 0.105401;
+    kV = 0.105401;
+    kP = 0.25401;
+    kI = 0.05401;
+    kD = 0.0015401;
+    /* 01!!!! */
+
 
     slot0Configs = new Slot0Configs();
     slot0Configs.kS = kS;
