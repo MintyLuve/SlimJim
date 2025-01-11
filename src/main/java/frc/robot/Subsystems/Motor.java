@@ -4,10 +4,11 @@
 
 package frc.robot.Subsystems;
 
-import com.revrobotics.CANSparkMax;
+import com.revrobotics.spark.SparkClosedLoopController;
+import com.revrobotics.spark.SparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkPIDController;
-import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -21,29 +22,30 @@ public class Motor extends SubsystemBase {
   /** Creates a new Motor. */
 
   //defining variables
-  SparkPIDController pController;
-  CANSparkMax motor;
+  SparkClosedLoopController pController;
+  SparkMax motor;
   public RelativeEncoder sparkEncoder;
   public Encoder encoder;
   DigitalInput dInput;
+  public SparkMaxConfig config;
 
   public Motor() {
     //init variables
-    motor = new CANSparkMax(Constants.ObjectConstants.MOTOR_PORT, MotorType.kBrushless);
-    pController = motor.getPIDController();
+    motor = new SparkMax(Constants.ObjectConstants.MOTOR_PORT, MotorType.kBrushless);
+    pController = motor.getClosedLoopController();
     sparkEncoder = motor.getEncoder();
     encoder = new Encoder(PIDConstants.ENCODER_SOURCE_A, PIDConstants.ENCODER_SOURCE_B, false, Encoder.EncodingType.k2X);
     dInput = new DigitalInput(ObjectConstants.DIGITAL_INPUT_PORT);
-
-    // sets pid constants
-    pController.setP(PIDConstants.PID_P);
-    pController.setI(PIDConstants.PID_I);
-    pController.setD(PIDConstants.PID_D);
-
-    // sets it to stay within 360
-    pController.setPositionPIDWrappingEnabled(true);
-    pController.setPositionPIDWrappingMaxInput(DumbConstants.FULL_POSITION_FORWARD);
-    pController.setPositionPIDWrappingMinInput(DumbConstants.FULL_POSITION_REVERSE);
+    //Configure all of the commands in the PID/ closed loop controller
+    config.closedLoop
+      // sets pid constants
+      .p(PIDConstants.PID_P)
+      .i(PIDConstants.PID_I)
+      .d(PIDConstants.PID_D)
+      // sets it to stay within 360
+      .positionWrappingEnabled(true)
+      .positionWrappingMaxInput(DumbConstants.FULL_POSITION_FORWARD)
+      .positionWrappingMinInput(DumbConstants.FULL_POSITION_REVERSE);
   }
 
   @Override
@@ -61,7 +63,7 @@ public class Motor extends SubsystemBase {
   }
   //sets the motor to a specific position
   public void setToPID(double pos){
-    pController.setReference(pos, CANSparkMax.ControlType.kPosition);
+    pController.setReference(pos, SparkMax.ControlType.kPosition);
   }
   //gets the red encoder's rotation
   public double getQRotation(){
