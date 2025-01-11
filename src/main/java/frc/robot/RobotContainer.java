@@ -48,11 +48,11 @@ public class RobotContainer {
   private void configureBindings() {
     operator.y().whileTrue(new MotorPID(motor, DumbConstants.FULL_POSITION_FORWARD));
     operator.b().whileTrue(new MotorPID(motor, DumbConstants.HALF_POSITION_REVERSE));
-    operator.a().toggleOnTrue(new FollowEncoder(motor));
+    //operator.a().toggleOnTrue(new FollowEncoder(motor));
     operator.povLeft().onTrue(new SolenoidToggle(solenoid));
     operator.povUp().onTrue(new CompressorToggle(compressor));
-    operator.povRight().onTrue(new LEDSolidColor(ledSubsystem, "GREEN"));
-    operator.povDown().toggleOnTrue(new LEDRainbow(ledSubsystem));
+    //operator.povRight().onTrue(new LEDSolidColor(ledSubsystem, "GREEN"));
+    //operator.povDown().toggleOnTrue(new LEDRainbow(ledSubsystem));
   }
 
   public Command getAutonomousCommand() {
