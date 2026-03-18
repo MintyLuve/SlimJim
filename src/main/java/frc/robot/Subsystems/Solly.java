@@ -14,7 +14,7 @@ public class Solly extends SubsystemBase {
   /** Creates a new Solenoid. */
   DoubleSolenoid dSolenoid;
   public Solly() {
-    dSolenoid = new DoubleSolenoid(ObjectConstants.PCM_PORT, PneumaticsModuleType.CTREPCM, 
+    dSolenoid = new DoubleSolenoid(ObjectConstants.PCM_PORT, PneumaticsModuleType.REVPH, 
                       ObjectConstants.SOLENOID_PORT_FORWARD, ObjectConstants.SOLENOID_PORT_REVERSE);
 
   }

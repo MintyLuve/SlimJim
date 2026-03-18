@@ -4,9 +4,13 @@
 
 package frc.robot.Subsystems;
 
+import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.ControlType;
+import com.revrobotics.PersistMode;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
@@ -36,6 +40,7 @@ public class Motor extends SubsystemBase {
     sparkEncoder = motor.getEncoder();
     encoder = new Encoder(PIDConstants.ENCODER_SOURCE_A, PIDConstants.ENCODER_SOURCE_B, false, Encoder.EncodingType.k2X);
     dInput = new DigitalInput(ObjectConstants.DIGITAL_INPUT_PORT);
+    config = new SparkMaxConfig();
     //Configure all of the commands in the PID/ closed loop controller
     config.closedLoop
       // sets pid constants
@@ -46,6 +51,10 @@ public class Motor extends SubsystemBase {
       .positionWrappingEnabled(true)
       .positionWrappingMaxInput(DumbConstants.FULL_POSITION_FORWARD)
       .positionWrappingMinInput(DumbConstants.FULL_POSITION_REVERSE);
+  
+    motor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    
+    sparkEncoder.setPosition(0);
   }
 
   @Override
@@ -63,7 +72,8 @@ public class Motor extends SubsystemBase {
   }
   //sets the motor to a specific position
   public void setToPID(double pos){
-    pController.setReference(pos, SparkMax.ControlType.kPosition);
+   // pController.setSetpoint(pos, SparkMax.ControlType.kPosition);
+    pController.setSetpoint(pos, ControlType.kPosition, ClosedLoopSlot.kSlot0);
   }
   //gets the red encoder's rotation
   public double getQRotation(){

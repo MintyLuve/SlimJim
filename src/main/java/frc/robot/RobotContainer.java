@@ -27,20 +27,20 @@ public class RobotContainer {
   Motor motor = new Motor();
   Solly solenoid = new Solly();
   Compressy compressor = new Compressy();
-  XboxMove xboxMove = new XboxMove(motor);
+  // XboxMove xboxMove = new XboxMove(motor);
   
-  AddressableLED ledStrip = new AddressableLED(LEDConstants.LED_PORT);
-  AddressableLEDBuffer stripBuffer = new AddressableLEDBuffer(LEDConstants.LED_COUNT);
-  LEDSubsystem ledSubsystem = new LEDSubsystem(ledStrip, stripBuffer);
+  //AddressableLED ledStrip = new AddressableLED(LEDConstants.LED_PORT);
+  //AddressableLEDBuffer stripBuffer = new AddressableLEDBuffer(LEDConstants.LED_COUNT);
+  // LEDSubsystem ledSubsystem = new LEDSubsystem(ledStrip, stripBuffer);
   
   private CommandXboxController operator = Controls.operator;
 
   public RobotContainer() {
-    motor.setDefaultCommand(xboxMove);
-    ledStrip.setLength(LEDConstants.LED_COUNT);
-    Commands.waitSeconds(10);
-    ledStrip.setData(stripBuffer);
-    ledStrip.start();
+    // motor.setDefaultCommand(xboxMove);
+    // ledStrip.setLength(LEDConstants.LED_COUNT);
+    // Commands.waitSeconds(10);
+    // ledStrip.setData(stripBuffer);
+    // ledStrip.start();
     
     configureBindings();
   }
@@ -48,7 +48,7 @@ public class RobotContainer {
   private void configureBindings() {
     operator.y().whileTrue(new MotorPID(motor, DumbConstants.FULL_POSITION_FORWARD));
     operator.b().whileTrue(new MotorPID(motor, DumbConstants.HALF_POSITION_REVERSE));
-    //operator.a().toggleOnTrue(new FollowEncoder(motor));
+    operator.a().toggleOnTrue(new FollowEncoder(motor));
     operator.povLeft().onTrue(new SolenoidToggle(solenoid));
     operator.povUp().onTrue(new CompressorToggle(compressor));
     //operator.povRight().onTrue(new LEDSolidColor(ledSubsystem, "GREEN"));
