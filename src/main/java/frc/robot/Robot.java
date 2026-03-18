@@ -4,37 +4,21 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.AddressableLED;
-import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.Constants.LEDConstants;
-import frc.robot.Subsystems.LEDSubsystem;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
-  private RobotContainer m_robotContainer;
+  private final RobotContainer m_robotContainer;
 
-  /* declare vars
-  private AddressableLED ledStrip;
-  private AddressableLEDBuffer stripBuffer;
-  private LEDSubsystem ledSubsystem;*/
-
-  @Override
-  public void robotInit() {
+  public Robot() {
     m_robotContainer = new RobotContainer();
   }
 
   @Override
-  public void robotPeriodic() {
-    CommandScheduler.getInstance().run();
-    SmartDashboard.putNumber("Motor Encoder Value", m_robotContainer.motor.sparkEncoder.getPosition());
-    SmartDashboard.putNumber("Red Encoder Value", m_robotContainer.motor.encoder.getDistance());
-
-  }
+  public void robotPeriodic() {}
 
   @Override
   public void disabledInit() {}
@@ -50,7 +34,7 @@ public class Robot extends TimedRobot {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
+      CommandScheduler.getInstance().schedule(m_autonomousCommand);
     }
   }
 

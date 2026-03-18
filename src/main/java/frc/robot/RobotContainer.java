@@ -4,55 +4,22 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.AddressableLED;
-import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.Commands.FollowEncoder;
-import frc.robot.Commands.MotorPID;
-import frc.robot.Commands.XboxMove;
-import frc.robot.Constants.DumbConstants;
-import frc.robot.Constants.LEDConstants;
-import frc.robot.Commands.LEDSolidColor;
-import frc.robot.Commands.LEDRainbow;
-import frc.robot.Commands.CompressorToggle;
-import frc.robot.Commands.SolenoidToggle;
-import frc.robot.Subsystems.Compressy;
-import frc.robot.Subsystems.LEDSubsystem;
-import frc.robot.Subsystems.Motor;
-import frc.robot.Subsystems.Solly;
+import frc.robot.Subsystems.MotorSystem;
 
 public class RobotContainer {
-  Motor motor = new Motor();
-  Solly solenoid = new Solly();
-  Compressy compressor = new Compressy();
-  // XboxMove xboxMove = new XboxMove(motor);
-  
-  //AddressableLED ledStrip = new AddressableLED(LEDConstants.LED_PORT);
-  //AddressableLEDBuffer stripBuffer = new AddressableLEDBuffer(LEDConstants.LED_COUNT);
-  // LEDSubsystem ledSubsystem = new LEDSubsystem(ledStrip, stripBuffer);
-  
-  private CommandXboxController operator = Controls.operator;
+
+  MotorSystem motorSystem = new MotorSystem();
+  CommandXboxController controller = new CommandXboxController(0);
 
   public RobotContainer() {
-    // motor.setDefaultCommand(xboxMove);
-    // ledStrip.setLength(LEDConstants.LED_COUNT);
-    // Commands.waitSeconds(10);
-    // ledStrip.setData(stripBuffer);
-    // ledStrip.start();
-    
     configureBindings();
   }
 
   private void configureBindings() {
-    operator.y().whileTrue(new MotorPID(motor, DumbConstants.FULL_POSITION_FORWARD));
-    operator.b().whileTrue(new MotorPID(motor, DumbConstants.HALF_POSITION_REVERSE));
-    operator.a().toggleOnTrue(new FollowEncoder(motor));
-    operator.povLeft().onTrue(new SolenoidToggle(solenoid));
-    operator.povUp().onTrue(new CompressorToggle(compressor));
-    //operator.povRight().onTrue(new LEDSolidColor(ledSubsystem, "GREEN"));
-    //operator.povDown().toggleOnTrue(new LEDRainbow(ledSubsystem));
+    controller.a().whileTrue(motorSystem.moveMotor(.5));
   }
 
   public Command getAutonomousCommand() {
